@@ -1,0 +1,31 @@
+@mixin telefono {
+    @media (min-width: telefono) {
+    /*============================================= 
+    MOVIL (revisamos en 480px) 
+    =============================================*/
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: $tablet) {
+    /*============================================= 
+    TABLET (MD revisamos en 768px) 
+    =============================================*/
+        @content;
+    }
+}
+
+
+@mixin desktop {
+    @media (min-width: $desktop) {
+    /*============================================= 
+    DESKTOP (LG revisamos en 1200px) 
+    =============================================*/
+        @content;
+    }
+}
+
+    
+
+    

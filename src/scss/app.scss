@@ -1,0 +1,20 @@
+// Normalize
+@import 'base/normalize';
+
+// Fuente Montserrat
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap');
+
+// Variables
+@import 'base/variables';
+
+// Mixins
+@import 'base/mixins';
+
+// Globales
+@import 'base/globales';
+
+// Header
+@import 'layout/header';
+
+// Footer
+@import 'layout/footer';
