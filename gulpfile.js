@@ -10,27 +10,47 @@ const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const avif = require('gulp-avif');
 
+// Utilidades CSS
+const concat = require('gulp-concat');
+const cssnano = require('cssnano');
+const sourcemaps = require('gulp-sourcemaps');
+
+// Utilidades JS
+const terser = require('gulp-terser-js');
+const rename = require('gulp-rename');
+
+const paths = {
+    scss: 'src/scss/**/*.scss',
+    js: 'src/js/**/*.js',
+    imagenes: 'src/img/**/*'
+}
+
 // Funcion que compila SASS
 function css(done) {
-    src('src/scss/app.scss')
+    src(paths.scss)
+        .pipe(sourcemaps.init())
         .pipe(sass())
-        .pipe(postcss([autoprefixer()]))
+        .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(sourcemaps.write('.'))
+        .pipe(rename({sufix: '.min'}))
         .pipe(dest('./build/css')); // Movemos el Css
     done();
 }
 
-// Funcion que compila SASS y minifica
-function minifyCSS(done) {
-    src('src/scss/app.scss')
-        .pipe(sass({outputStyle: 'compressed'})) // Csmprimirmos el Css
-        .pipe(postcss([autoprefixer()]))
-        .pipe(dest('./build/css')); // Movemos el Css
+function js(done) {
+    src(paths.js)
+      .pipe(sourcemaps.init())
+      .pipe(concat('bundle.js'))
+      .pipe(terser())
+      .pipe(sourcemaps.write('.'))
+      .pipe(rename({sufix: '.min'}))
+      .pipe(dest('./build/js'))
     done();
 }
 
 // Procesar imagenes a Build
 function imagenes(done) {
-    src('src/img/**/*')
+    src(paths.imagenes)
         .pipe(imagemin({optmizationLevel: 3})) // Optimizamos las imagenes
         .pipe(dest('./build/img')); // Movemos las imagenes
     done();
@@ -41,7 +61,7 @@ function versionWebp(done) {
     const opciones = {
         quality: 50
     }
-    src('src/img/**/*.{png,jpg,jepg}')
+    src(paths.imagenes + '.{png,jpg,jepg}')
         .pipe(webp(opciones))
         .pipe(dest('./build/img')); // Movemos las imagenes
     done();
@@ -52,7 +72,7 @@ function versionAvif(done) {
     const opciones = {
         quality: 50
     }
-    src('src/img/**/*.{png,jpg,jepg}')
+    src(paths.imagenes + '.{png,jpg,jepg}')
         .pipe(avif(opciones))
         .pipe(dest('./build/img')); // Movemos las imagenes
     done();
@@ -61,14 +81,17 @@ function versionAvif(done) {
 
 // Agregando un watch
 function dev() {
-    watch('src/scss/**/*.scss', css); // * = la carpeta actual - ** = todos los archivos con esa extension
-    watch('src/img/**/*', imagenes); // Enviamos todas las imagenes con watch a Build
+    watch(paths.scss, css); // * = la carpeta actual - ** = todos los archivos con esa extension
+    watch(paths.js, js );
+    watch(paths.imagenes, imagenes); // Enviamos todas las imagenes con watch a Build
+    watch(paths.imagenes, versionWebp); 
+    watch(paths.imagenes, versionAvif); 
 }
 
 exports.css = css;
 exports.dev = dev;
-exports.minifyCSS = minifyCSS;
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
-exports.default = series(imagenes, versionWebp, versionAvif, css, dev);
+exports.js = js;
+exports.default = series(imagenes, versionWebp, versionAvif, js, css, dev);
