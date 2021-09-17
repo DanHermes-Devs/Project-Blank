@@ -13,11 +13,12 @@ npm install
 Dillinger is currently extended with the following plugins.
 Instructions on how to use them in your own application are linked below.
 
-| Comando | README |
-| ------ | ------ |
-| gulp css | Nos compila nuestros archivos SASS |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+| COMANDO          | ACCIÓN                                                                                        |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| gulp css         | Nos compila nuestros archivos SASS                                                            |
+| gulp dev         | Se genera un watch que estara escuchando cambios en el SASS y en la carga de imagenes         |
+| gulp minifyCSS   | Nos compila y minifica nuestros archivos SASS                                                 |
+| gulp imagenes    | Nos comprime las imagenes                                                                     |
+| gulp versionWebp | Nos genera imagenes WEBP en base a imagenes .png, .jpg, .jpeg y comprime aun mas las imagenes |
+| gulp versionAvif | Nos genera imagenes Avif en base a imagenes .png, .jpg, .jpeg y comprime aun mas las imagenes |
+| gulp             | Nos ejecuta todos los comandos anteriores, excepto minifyCSS                                  |
