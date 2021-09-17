@@ -5,3 +5,10 @@ Este proyecto es un template base para empezar a diseñar de manera fácil, ya q
 ####Solamente hacemos npm install  y listo
 
 `$ npm install`
+
+For production environments...
+
+```sh
+npm install --production
+NODE_ENV=production node app
+```
