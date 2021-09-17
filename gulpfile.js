@@ -32,7 +32,7 @@ function css(done) {
         .pipe(sass())
         .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(sourcemaps.write('.'))
-        .pipe(rename({sufix: '.min'}))
+        .pipe(rename({suffix: '.min'}))
         .pipe(dest('./build/css')); // Movemos el Css
     done();
 }
@@ -43,7 +43,7 @@ function js(done) {
       .pipe(concat('bundle.js'))
       .pipe(terser())
       .pipe(sourcemaps.write('.'))
-      .pipe(rename({sufix: '.min'}))
+      .pipe(rename({suffix: '.min'}))
       .pipe(dest('./build/js'))
     done();
 }
